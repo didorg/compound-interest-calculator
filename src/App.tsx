@@ -1,20 +1,24 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CalculatorForm } from './components/CalculatorForm';
 import { ResultsDashboard } from './components/ResultsDashboard';
 import { CalculatorInputs, CalculationResult } from './types/calculator';
 import { calculateCompoundInterest } from './utils/calculations';
 
 function App() {
-  const [inputs, setInputs] = useState<CalculatorInputs>({
+  const defaultInputs: CalculatorInputs = {
     currentSavings: 1000,
     yearsToSave: 10,
     rateOfReturn: 24,
     extraContribution: 0,
     contributionFrequency: 'monthly',
     compoundingFrequency: 'annually',
-  });
+  };
 
-  const [result, setResult] = useState<CalculationResult | null>(null);
+  const [inputs, setInputs] = useState<CalculatorInputs>(defaultInputs);
+
+  const [result, setResult] = useState<CalculationResult | null>(() =>
+    calculateCompoundInterest(defaultInputs)
+  );
 
   const handleInputChange = (
     field: keyof CalculatorInputs,
@@ -31,10 +35,7 @@ function App() {
     setResult(calculationResult);
   };
 
-  // Calculate on initial load
-  React.useEffect(() => {
-    handleCalculate();
-  }, []);
+  // Initial result is precomputed; no effect needed
 
   return (
     <div className='min-h-screen bg-gray-100'>
