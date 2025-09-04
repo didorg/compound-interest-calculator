@@ -11,15 +11,18 @@ function App() {
     rateOfReturn: 24,
     extraContribution: 0,
     contributionFrequency: 'monthly',
-    compoundingFrequency: 'annually'
+    compoundingFrequency: 'annually',
   });
 
   const [result, setResult] = useState<CalculationResult | null>(null);
 
-  const handleInputChange = (field: keyof CalculatorInputs, value: number | string) => {
-    setInputs(prev => ({
+  const handleInputChange = (
+    field: keyof CalculatorInputs,
+    value: number | string
+  ) => {
+    setInputs((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -34,17 +37,17 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
-          <div className="w-full">
+    <div className='min-h-screen bg-gray-100'>
+      <div className='container mx-auto px-4 py-12'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto'>
+          <div className='w-full'>
             <CalculatorForm
               inputs={inputs}
               onInputChange={handleInputChange}
               onCalculate={handleCalculate}
             />
           </div>
-          <div className="w-full">
+          <div className='w-full'>
             <ResultsDashboard result={result} />
           </div>
         </div>
